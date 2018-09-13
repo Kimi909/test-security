@@ -41,5 +41,7 @@ public class SecurityProperties {
 	public void setOauth2(OAuth2Properties oauth2) {
 		this.oauth2 = oauth2;
 	}
+
+
 }
 
