@@ -58,7 +58,11 @@ public class ImoocAuthorizationServerConfig extends AuthorizationServerConfigure
         if(ArrayUtils.isNotEmpty(securityProperties.getOauth2().getClients())){
             for (OAuth2ClientProperties client : securityProperties.getOauth2().getClients() ) {
                 builder.withClient(client.getClientId()).secret(client.getClientSecret())
-                        .accessTokenValiditySeconds(client.getAccessTokenValidateSeconds());
+                        .authorizedGrantTypes("refresh_token","authorization_code","password")
+                        .accessTokenValiditySeconds(client.getAccessTokenValidateSeconds())
+                .refreshTokenValiditySeconds(3600)
+                .scopes("all");
+
 
             }
         }
