@@ -3,15 +3,23 @@
  */
 package com.imooc.web.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.imooc.security.core.properties.SecurityProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
@@ -38,9 +46,25 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	@Autowired
+	private SecurityProperties securityProperties;
 	
 	@GetMapping("/me")
 	public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+		return user;
+	}
+
+	@GetMapping("/jwtme")
+	public Object getJwtCurrentUser(Authentication user, HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+		Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+				.parseClaimsJws(token).getBody();
+
+		String company = (String) claims.get("imooc");
+
+		System.out.println(company);
+
 		return user;
 	}
 
