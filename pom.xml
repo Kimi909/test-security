@@ -47,5 +47,6 @@
 		<module>imooc-security-core</module>
 		<module>imooc-security-app</module>
 		<module>imooc-security-demo</module>
-	</modules>
+        <module>imooc-security-authorize</module>
+    </modules>
 </project>

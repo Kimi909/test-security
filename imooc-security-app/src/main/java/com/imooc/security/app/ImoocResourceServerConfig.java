@@ -62,6 +62,7 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
                         "/user/regist")
                 .permitAll()
+                     .antMatchers("/user/*").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
