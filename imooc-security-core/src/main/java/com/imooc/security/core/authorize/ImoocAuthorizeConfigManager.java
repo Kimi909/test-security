@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2018/9/14.
@@ -14,12 +15,13 @@ import java.util.List;
 public class ImoocAuthorizeConfigManager implements AuthorizeConfigManager{
 
     @Autowired
-    private List<AuthorizeConfigProvider> authorizeConfigProviders;
+    private Set<AuthorizeConfigProvider> authorizeConfigProviders;
 
     @Override
     public void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
         for (AuthorizeConfigProvider authorizeConfigProvider : authorizeConfigProviders) {
             authorizeConfigProvider.config(config);
         }
+        config.anyRequest().authenticated();
     }
 }
