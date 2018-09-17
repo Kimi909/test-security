@@ -22,6 +22,6 @@ public class ImoocAuthorizeConfigManager implements AuthorizeConfigManager{
         for (AuthorizeConfigProvider authorizeConfigProvider : authorizeConfigProviders) {
             authorizeConfigProvider.config(config);
         }
-        config.anyRequest().authenticated();
+        //config.anyRequest().authenticated();
     }
 }
